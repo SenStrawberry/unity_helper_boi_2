@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class input_and_processing : MonoBehaviour
 {
-    public string user_input;
+/*    public string user_input;
     public GameObject input_field;
     public GameObject text_display;
     public List<string> Progams;
@@ -58,5 +58,5 @@ public class input_and_processing : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }
