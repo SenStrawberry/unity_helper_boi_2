@@ -15,27 +15,27 @@ public class executibleApp
 public class input_and_processing : MonoBehaviour
 {
     public string[] workspace_list = { "blender", "chrome"};
-        public string user_input;
-        public GameObject input_field;
-        public GameObject text_display;
+    public string user_input;   
+    public GameObject input_field;
+    public GameObject text_display;
 
 
 
-        public void store_user_input()
+    public void store_user_input()
+    {
+        user_input = input_field.GetComponent<Text>().text;
+        text_display.GetComponent<Text>().text = "user said: " + user_input;
+    }
+
+    public void open_command() 
+    {
+        if(user_input == "open")
         {
-            user_input = input_field.GetComponent<Text>().text;
-            text_display.GetComponent<Text>().text = "user said: " + user_input;
+
+            Process.Start("C:\\Program Files\\Blender Foundation\\Blender 2.82\\blender.exe");
+
         }
-
-        public void open_command()
-        {
-            if(user_input == "open")
-            {
-
-                Process.Start("C:\\Program Files\\Blender Foundation\\Blender 2.82\\blender.exe");
-
-            }
-        }
+    }
 
 
 
@@ -45,8 +45,7 @@ public class input_and_processing : MonoBehaviour
     public void multi_open()
     {
         string filePath = @"C:\Users\Spencer\Documents\Homework\A_levels\NEA\app_locations.txt";
-
-        List<executibleApp> apps = new List<executibleApp>();
+        Dictionary<string, executibleApp> apps = new Dictionary<string, executibleApp>();
         List<string> lines = File.ReadAllLines(filePath).ToList();
 
         foreach (var line in lines)
@@ -58,17 +57,12 @@ public class input_and_processing : MonoBehaviour
             newApp.appName = column[0];
             newApp.fileLocation = column[1];
 
-            apps.Add(newApp);
+            //apps.Add(newApp);
+            apps[newApp.appName] = newApp;
 
             foreach(string i in workspace_list)
             {
-                foreach (var executibleApp in apps)
-                {
-                    if (executibleApp.appName == i)
-                    {
-                        Process.Start($"{ executibleApp.fileLocation}.exe");
-                    }
-                }
+                Process.Start($"{ apps[i].fileLocation}.exe");
             }
         }
 
