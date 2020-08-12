@@ -58,7 +58,12 @@ public class input_and_processing : MonoBehaviour
             newApp.fileLocation = column[1];
 
             //apps.Add(newApp);
-            apps[newApp.appName] = newApp;
+            try {
+                apps.Add(newApp.appName, newApp);
+            } catch {
+                
+            }
+            
 
             foreach(string i in workspace_list)
             {
