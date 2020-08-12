@@ -5,58 +5,72 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
-
+public class executibleApp
+{
+    public string appName { get; set; }
+    public string fileLocation { get; set; }
+}
 public class input_and_processing : MonoBehaviour
 {
-/*    public string user_input;
-    public GameObject input_field;
-    public GameObject text_display;
-    public List<string> Progams;
-    public string[] workspace_list = {"Blender", "Anki", "Chrome"};
-    
+    public string[] workspace_list = { "blender", "chrome"};
+        public string user_input;
+        public GameObject input_field;
+        public GameObject text_display;
 
 
-    public void store_user_input()
-    {
-        user_input = input_field.GetComponent<Text>().text;
-        text_display.GetComponent<Text>().text = "user said: " + user_input;
-    }
 
-    public void open_command()
-    {
-        if(user_input == "open")
+        public void store_user_input()
         {
-         
-            Process.Start("C:\\Program Files\\Blender Foundation\\Blender 2.82\\blender.exe");
-
+            user_input = input_field.GetComponent<Text>().text;
+            text_display.GetComponent<Text>().text = "user said: " + user_input;
         }
-    }
-    
-    public void open_workspaces()
-    {
-        foreach (string i in workspace_list)
-        {
-            Process.Start("C:\\Program Files\\Blender Foundation\\Blender 2.82\\blender.exe");
-        }
-    }
 
-
-    public void workspace_opening()
-    {   foreach (string i in workspace)
+        public void open_command()
         {
-            bool program_found = false;
-            while (program_found == false)
+            if(user_input == "open")
             {
-                foreach (string x in progam_list)
+
+                Process.Start("C:\\Program Files\\Blender Foundation\\Blender 2.82\\blender.exe");
+
+            }
+        }
+
+
+
+
+       
+    //Open workspaces
+    public void multi_open()
+    {
+        string filePath = @"C:\Users\Spencer\Documents\Homework\A_levels\NEA\app_locations.txt";
+
+        List<executibleApp> apps = new List<executibleApp>();
+        List<string> lines = File.ReadAllLines(filePath).ToList();
+
+        foreach (var line in lines)
+        {
+            string[] column = line.Split(',');
+                
+            executibleApp newApp = new executibleApp();
+
+            newApp.appName = column[0];
+            newApp.fileLocation = column[1];
+
+            apps.Add(newApp);
+
+            foreach(string i in workspace_list)
+            {
+                foreach (var executibleApp in apps)
                 {
-                    if (program_list[0, x] == workspace[i])
+                    if (executibleApp.appName == i)
                     {
-                        Process.Start(program_list[1, x]);
-                        bool program_found = true;
+                        Process.Start($"{ executibleApp.fileLocation}.exe");
                     }
                 }
             }
         }
-    }*/
+
+    }
 }
