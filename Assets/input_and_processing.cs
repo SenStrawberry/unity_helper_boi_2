@@ -14,7 +14,7 @@ public class executibleApp
 }
 public class input_and_processing : MonoBehaviour
 {
-    public string[] workspace_list = { "blender", "chrome"};
+    public string[] workspace_list = { "Blender", "Chrome"};
     public string user_input;   
     public GameObject input_field;
     public GameObject text_display;
@@ -37,21 +37,15 @@ public class input_and_processing : MonoBehaviour
         }
     }
 
+    string filePath = @"C:\Users\Spencer\Documents\Homework\A_levels\NEA\app_locations.txt";
+    Dictionary<string, executibleApp> apps = new Dictionary<string, executibleApp>();
+    List<string> lines = new List<string>();
+    private void Start() {
+        lines = File.ReadAllLines(filePath).ToList();
 
-
-
-       
-    //Open workspaces
-    public void multi_open()
-    {
-        string filePath = @"C:\Users\Spencer\Documents\Homework\A_levels\NEA\app_locations.txt";
-        Dictionary<string, executibleApp> apps = new Dictionary<string, executibleApp>();
-        List<string> lines = File.ReadAllLines(filePath).ToList();
-
-        foreach (var line in lines)
-        {
+        foreach (var line in lines) {
             string[] column = line.Split(',');
-                
+
             executibleApp newApp = new executibleApp();
 
             newApp.appName = column[0];
@@ -60,15 +54,19 @@ public class input_and_processing : MonoBehaviour
             //apps.Add(newApp);
             try {
                 apps.Add(newApp.appName, newApp);
-            } catch {
-                
             }
-            
+            catch {
 
-            foreach(string i in workspace_list)
-            {
-                Process.Start($"{ apps[i].fileLocation}.exe");
             }
+        }
+    }
+
+
+    //Open workspaces
+    public void multi_open()
+    {
+        foreach (string i in workspace_list) {
+            Process.Start($"{ apps[i].fileLocation}.exe");
         }
 
     }
